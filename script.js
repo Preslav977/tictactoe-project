@@ -3,21 +3,51 @@
 // module for displayController
 // factory function for players
 
+// players ---> FF
+// the players needs names and markers
+// players has to be connected with players's turns,
+// to know who is turn is, who won or it'a tie and etc.
+
 const gameBoard = (function () {
-  gameBoardArray = [];
+  const gameBoardArray = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x'];
 
-  const placeMarker = () => {};
+  const createCell = () => {
+    const boardContainer = document.getElementById('board');
 
-  const clear = () => {};
+    for (let i = 0; i < 9; i += 1) {
+      const cell = document.createElement('div');
+      cell.style.fontSize = '1.5em';
+      cell.classList.add('board-cells');
+      // used loop as attribute for simple indexing
+      cell.setAttribute('data-index', i);
+      cell.textContent = `${gameBoardArray[i]}`;
+      cell.addEventListener('click', clickedCell);
+      boardContainer.appendChild(cell);
+    }
+  };
+  // function to know which cell is clicked
+  const clickedCell = (e) => {
+    const getCell = e.target;
+    const saveCellIndex = getCell.getAttribute('data-index');
+    console.log(saveCellIndex);
+  };
+
+  // const placeMarker = () => {};
+
+  // const clear = () => {};
 
   return {
     gameBoardArray,
-    placeMarker,
-    clear,
+    createCell,
+    clickedCell,
+    // placeMarker,
+    // clear,
   };
 })();
 
-const displayController = (function () {})();
+gameBoard.createCell();
+
+// const displayController = (function () {})();
 
 const createPlayers = (name, marker) => ({ name, marker });
 
@@ -25,11 +55,6 @@ const tom = createPlayers('tom', 'o');
 const jerry = createPlayers('jerry', 'x');
 console.log(tom);
 console.log(jerry);
-
-// players ---> FF
-// the players needs names and markers
-// players has to be connected with players's turns,
-// to know who is turn is, who won or it'a tie and etc.
 
 //  2. Second step, create the functionality of the gameBoard module
 //  gameBoard ---> module

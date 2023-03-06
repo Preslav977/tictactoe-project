@@ -1,0 +1,25 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  background-color: lightblue;
+}
+
+.board {
+  border: 1px solid black;
+  height: 300px;
+  width: 300px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  background-color: white;
+}
+
+.board-cells {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
