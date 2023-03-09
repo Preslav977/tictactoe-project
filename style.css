@@ -17,7 +17,7 @@ body {
   background-color: white;
 }
 
-.board-cells {
+.cells {
   border: 1px solid black;
   display: flex;
   justify-content: center;

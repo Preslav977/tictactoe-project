@@ -9,52 +9,63 @@
 // to know who is turn is, who won or it'a tie and etc.
 
 const gameBoard = (function () {
-  const gameBoardArray = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x'];
+  const gameBoardArray = ['', '', '', '', '', '', '', '', ''];
 
-  const createCell = () => {
-    const boardContainer = document.getElementById('board');
-
+  // eslint-disable-next-line consistent-return, no-unused-vars
+  const createCell = (index, value) => {
+    // eslint-disable-next-line no-unreachable-loop
     for (let i = 0; i < 9; i += 1) {
+      const boardContainer = document.getElementById('board');
       const cell = document.createElement('div');
-      cell.style.fontSize = '1.5em';
-      cell.classList.add('board-cells');
-      // used loop as attribute for simple indexing
-      cell.setAttribute('data-index', i);
+      cell.style.fontSize = '2em';
+      cell.classList.add('cells');
+      cell.setAttribute('data-index', index);
       cell.textContent = `${gameBoardArray[i]}`;
-      cell.addEventListener('click', clickedCell);
+      // cell.addEventListener('click', clickedCell);
+      // eslint-disable-next-line no-use-before-define
+      cell.addEventListener('click', placeMarker);
       boardContainer.appendChild(cell);
+      return cell;
     }
   };
-  // function to know which cell is clicked
-  const clickedCell = (e) => {
-    const getCell = e.target;
-    const saveCellIndex = getCell.getAttribute('data-index');
-    console.log(saveCellIndex);
-  };
 
-  // const placeMarker = () => {};
+  const placeMarker = (e) => {
+    const getCell = e.target;
+    // eslint-disable-next-line no-multi-assign
+    const dataToAdd = (getCell.textContent = 'x');
+    const ofItemsToBeDeleted = 1;
+    const getCellIndex = getCell.getAttribute('data-index');
+    const index = getCellIndex;
+    gameBoardArray.splice(index, ofItemsToBeDeleted, dataToAdd);
+    console.log(gameBoardArray);
+  };
 
   // const clear = () => {};
 
   return {
     gameBoardArray,
     createCell,
-    clickedCell,
-    // placeMarker,
+    placeMarker,
     // clear,
   };
 })();
 
-gameBoard.createCell();
+gameBoard.createCell(0, 1);
+gameBoard.createCell(1, 2);
+gameBoard.createCell(2, 3);
+gameBoard.createCell(3, 4);
+gameBoard.createCell(4, 5);
+gameBoard.createCell(5, 6);
+gameBoard.createCell(6, 7);
+gameBoard.createCell(7, 8);
+gameBoard.createCell(8, 9);
 
 // const displayController = (function () {})();
 
-const createPlayers = (name, marker) => ({ name, marker });
+// const createPlayers = (name, marker) => ({ name, marker });
 
-const tom = createPlayers('tom', 'o');
-const jerry = createPlayers('jerry', 'x');
-console.log(tom);
-console.log(jerry);
+// const playerOneName = createPlayers('playerOne', 'X');
+// const playerTwoName = createPlayers('playerTwo', 'O');
 
 //  2. Second step, create the functionality of the gameBoard module
 //  gameBoard ---> module
@@ -68,7 +79,7 @@ console.log(jerry);
 //  2.2. function that will place something on the board,
 // and to know if the cell is --->
 //  maybe using something to check which cell is clicked ?
-//  2.2. Two options using data-attributes or using IndexOf method to know ??
+//  Two options using data-attributes or using IndexOf method to know ??
 //  occupied or not, after that DOM will handle the markers(X, O) on the board
 // ---> check for example cell(0) ---> clicked,
 //  is it empty true, then place the marker there,
