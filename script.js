@@ -1,139 +1,202 @@
-// 1. First step, creating the modules and factory functions
-// module for gameBoard
-// module for displayController
-// factory function for players
+const gameBoard = (() => {
+  // in here make a array for the markers
+  const gameArray = ['', '', '', '', '', '', '', '', ''];
 
-// players ---> FF
-// the players needs names and markers
-// players has to be connected with players's turns,
-// to know who is turn is, who won or it'a tie and etc.
-
-const gameBoard = (function () {
-  const gameBoardArray = ['', '', '', '', '', '', '', '', ''];
-
-  // eslint-disable-next-line consistent-return, no-unused-vars
-  const createCell = (index, value) => {
-    // eslint-disable-next-line no-unreachable-loop
-    for (let i = 0; i < 9; i += 1) {
-      const boardContainer = document.getElementById('board');
-      const cell = document.createElement('div');
-      cell.style.fontSize = '2em';
-      cell.classList.add('cells');
-      cell.setAttribute('data-index', index);
-      cell.textContent = `${gameBoardArray[i]}`;
-      // cell.addEventListener('click', clickedCell);
-      // eslint-disable-next-line no-use-before-define
-      cell.addEventListener('click', placeMarker);
-      boardContainer.appendChild(cell);
-      return cell;
+  // place marker on the array index check if the index
+  // is bigger than the length of the array return false else return true
+  const placeMarker = (marker, index) => {
+    // check if there is already something on the board
+    if (gameArray.includes(marker)) {
+      console.log('The marker exist already');
+      return false;
     }
+    console.log('The marker doenst exist');
+    gameArray[index] = marker;
+    return true;
   };
 
-  const placeMarker = (e) => {
-    const getCell = e.target;
-    // eslint-disable-next-line no-multi-assign
-    const dataToAdd = (getCell.textContent = 'x');
-    const ofItemsToBeDeleted = 1;
-    const getCellIndex = getCell.getAttribute('data-index');
-    const index = getCellIndex;
-    gameBoardArray.splice(index, ofItemsToBeDeleted, dataToAdd);
-    console.log(gameBoardArray);
+  // get the object of the board
+  const getBoard = () => gameArray.map((element) => element);
+
+  // function with winning conditions, something else is missing ?
+  // in here using array indexes with switch or nested else if's maybe
+  // or something else to check all these indexes
+  const checkForWin = (index) => {
+    // some type of loop to maybe check all of there combinations ?
+    const winningConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+
+      [2, 4, 6],
+      [6, 4, 2],
+      [0, 4, 8],
+      [8, 4, 0],
+
+      [2, 1, 0],
+      [5, 4, 3],
+      [8, 7, 6],
+
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [6, 3, 0],
+      [7, 4, 1],
+      [8, 5, 2],
+    ];
   };
 
-  // const clear = () => {};
+  const clearBoard = (board) => {
+    // if board contains any elements remove any elements ?
+    // if the round is finished and there is a winner
+    // clear the board "array" remove everything
+  };
 
   return {
-    gameBoardArray,
-    createCell,
+    gameArray,
+    getBoard,
     placeMarker,
-    // clear,
+    checkForWin,
+    clearBoard,
   };
 })();
 
-gameBoard.createCell(0, 1);
-gameBoard.createCell(1, 2);
-gameBoard.createCell(2, 3);
-gameBoard.createCell(3, 4);
-gameBoard.createCell(4, 5);
-gameBoard.createCell(5, 6);
-gameBoard.createCell(6, 7);
-gameBoard.createCell(7, 8);
-gameBoard.createCell(8, 9);
+// console.log(gameBoard.placeMarker('x', 1));
+// console.log(gameBoard.placeMarker('o', 7));
+// console.log(gameBoard.placeMarker('x', 6));
+// console.log(gameBoard.placeMarker('o', 8));
+// console.log(gameBoard.gameArray);
 
-// const displayController = (function () {})();
+const gameController = (() => {
+  // create players objects using factory function
+  const createPlayers = (name, marker) => ({ name, marker });
 
-// const createPlayers = (name, marker) => ({ name, marker });
+  const playerOne = createPlayers('Player One', 'X');
+  const playerTwo = createPlayers('Player Two', 'O');
 
-// const playerOneName = createPlayers('playerOne', 'X');
-// const playerTwoName = createPlayers('playerTwo', 'O');
+  // using get method to access their markers
+  // the reason for this is p1 is X or O to have access for
+  // them in the DOM and to know who is X or O
+  const getPlayersMarkers = () => marker;
 
-//  2. Second step, create the functionality of the gameBoard module
-//  gameBoard ---> module
-//  module will contain an array ---> gameBoardArray = [];
-//  2.1. function that will render the content of the
-// board --> createCell, params ?
-//  created with DOM (cells), and will display what the array will contain
-// ---> using textContent of the cells ?
-//  One thing is known the board will be 3x3 using a loop
-// instead of creating one by one the cell
-//  2.2. function that will place something on the board,
-// and to know if the cell is --->
-//  maybe using something to check which cell is clicked ?
-//  Two options using data-attributes or using IndexOf method to know ??
-//  occupied or not, after that DOM will handle the markers(X, O) on the board
-// ---> check for example cell(0) ---> clicked,
-//  is it empty true, then place the marker there,
-// then use DOM to show it on the board
-//  IF it's not occupied place it for example of cell(1)
-// if there's is already something
-//  IF is not empty false ---> ignore cell(1)
-//  don't allow to be placed something again
+  // get first player since rule of thumb p1 is always
+  // going to be first
+  const getFirstPlayer = () => playerOne;
 
-//  3. Third step, create the gameController functionality's
-//  gameController ---> module
-//  3.1. startGame() --> this functionality will fire up when the game
-// has been started
-//  This functionality will save the gameState maybe in a array,
-// not clear what needs to happened here,
-//  but it has to do with gameState which will determine if the game
-// is started/ended, before the game will be played
-//  3.2. playersTurns() ---> functionality to know who's turn is
-//  This will allow me to know who is first p1 or p2, has to connected
-// with players FF and
-//  using DOM will show who is playing right now, rule of thumb p1
-// is always be first since p2 can't start until p1 is started
-//  3.3. checkForWin() ---> functionality to know if the game is over,
-// who won/lose, or it's a tie
-//  To check for win first has to check in the array and the board ?,
-// or only in the array ?
-//  There's is only couple of possibilities [0,1,2], [3,4,5], [6,7,8]
-// ---> horizontal
-//  [2,4,6], [6,4,2], [0,4,8], [8,4,0] ---> vertical
-//  Maybe checking the indexes of the array with nested if's,
-// switch or some other array methods ???
-//  Also for a tie if is not 3 in a row it's a tie has to do some check
-//  It will be better to know if it's a tie if not
-// only isn't a three in a row but also when the
-//  board is filled so can determine maybe easier
-// instead of checking 4/5 based of the markers ?
+  // in here switch the turns using else if, switch or ternary operator ?
+  const switchPlayerTurns = () => {};
 
-//  4. Step 4 build the interface of the game
-//  4.1. Interface for startGame() (button), functionality that
-// will allow players to type their name and choose their markers
-//  Building using input text for the names,
-// for the markers two radio button with X, O, that will force them to choose
-//  either one or the other if it's a input text that will confuse the game ?
-//  4.2. displayElement (what marks has been placed,
-// also chosen by player1 or player2),
-//  Messages --> tied with DOM,
-// playersTurn so when p1 is turn show it, place mark if it's done,
-//  show p2 turn and place marker until the board is filled ?
-//  (which turn is player1 or player2 ?), (when the game is over)
-// - show the winner and if it's a tie
-//  4.3. resetGame() ---> if the game is over reset everything gameState,
-// player names, markers, displayElement, board, array
-//  that will allow the players to start a new game
-//  resetting the value of the inputs, clear the board,
-// hmm maybe remove the elements of the gameBoardArray and some other arrays,
-//  check if the array has some elements(value), if it's true
-// remove them if not keep filling them until the arrays are full ?
+  const printTurn = () => {
+    // if it's the p1 turn console.log it, else if the p2 turn console.log
+    // and so on
+    let player;
+    if (player === playerOne) {
+      console.log('Player One Turn');
+    } else {
+      console.console.log('Player Two Turn');
+    }
+  };
+
+  // in here couple of things needs to happened
+  // play the round using marker and a player
+  // hmm maybe the array needs to be here since the he is the board
+  // after that placeMarker on the index with a marker ?
+  // switch players turns ?
+  const playRound = (board, marker, player) => {
+    // getPlayerMarkers()
+    // switchPlayerTurns()
+    // printTurn()
+    // winning logic ?
+  };
+
+  return {
+    getPlayersMarkers,
+    printTurn,
+    playRound,
+  };
+})();
+
+const displayController = (() => {
+  // create the board with DOM with data-att, to get
+  // their indexes for later, using the array has as parameter
+  // to be able to call it below using the current module
+  // and the array module which he resides
+  const showBoard = (gameArray) => {
+    const boardContainer = document.getElementById('game-board');
+    for (let i = 0; i < 9; i += 1) {
+      const cell = document.createElement('button');
+      cell.classList.add('cell');
+      cell.setAttribute('data-index', i);
+      cell.style.fontSize = '1.5em';
+      // eslint-disable-next-line no-use-before-define
+      cell.addEventListener('click', clickedCell);
+      // using simple i of the loop for easy to work indexes
+      cell.textContent = `${gameArray[i]}`;
+      boardContainer.appendChild(cell);
+    }
+  };
+
+  const clickedCell = (e) => {
+    // in here get which cell has been clicked
+    // get the data-att hmm save it for later
+    // then place the marker
+    // the problem here placeMarker is in another module
+    const saveClickedCell = e.target;
+    // console.log(clickedCell);
+    const saveClickedCellIndex = saveClickedCell.getAttribute('data-index');
+    // eslint-disable-next-line no-multi-assign
+    const dropMarker = (saveClickedCell.textContent = 'x');
+    console.log(gameBoard.placeMarker(dropMarker, saveClickedCellIndex));
+    // console.log(dropMark);
+    console.log(gameBoard.gameArray);
+    // console.log(saveClickedCellIndex);
+  };
+
+  return {
+    showBoard,
+    clickedCell,
+  };
+})();
+
+console.log(displayController.showBoard(gameBoard.gameArray));
+
+// 1. create modules for gameBoard, gameController, displayController
+
+// 2. inside gameBoard module create, array for the board
+
+// 3. create function to render the content of the array for the webpage,
+// two choices either use data-att, to know
+// which cell has the value of the mark later,
+// or create the board entirely with HTML and populate it with javascript ?
+// if the board is created with board 3x3 easy, using divisions
+
+// 4. function to place something on the board, maybe using a function inside
+// gameBoard to place something there first in the console for example
+// placeMarker(0, 'x') ==> splice might do the job since it allows to use
+// the method parameters splice(start, deleteCount, item1, item2, ...)
+// first is the index maybe using index as start
+// depending on which the calling the function
+// deleteCount maybe delete one element so it
+// wouldn't able to place new element if using 0
+// item will be a marker maybe using marker as
+// parameter then creating variable and assign it there
+// it has to prevent placing a mark if there is already
+// something on the current index maybe
+// maybe using check so it wouldn't allow the player
+// placeMarker on something higher than 8 index
+
+// 5. tidying with DOM meaning it has to get the
+// reference of the array somehow and using event
+// by calling for example placeMarker(1, 'o'),
+// call the event function by placing mark there ?
+
+// 6. so if in the gameBoard has functionality for -
+// placingMark, clearingBoard, checkingForWin maybe
+// it will be done for now ?
+// 7. in gameController players has to there they will have
+// two things names and markers,
+// then something has to indicate who's turn is, who
+// is the first player, then switch the players turns,
+// playRound will have parameters of index, players, marker ?
+// and depending on the result of the board call
+// checkForWin and declare the winner ?
