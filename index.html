@@ -5,21 +5,57 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,900&display=swap" rel="stylesheet">
+  <title>TicTacToe</title>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- <div class="container-one">
+  <div class="container-playerOne">
+    <label for="first-player">Player One:</label>
     <div class="first-player" id="first-player"></div>
-  </div> -->
-  <div class="container">
+  </div>
+  <main class="container">
+    <div class="header-container">
+      <header class="header">Tic Tac Toe </header>
+    </div>
+    <div class="form-container" id="form-container">
+      <form action="#" method="get">
+        <div class="user-information">
+          <div class="player-one">
+            <div class="playerone-name-container">
+          <label for="player-one-name">Player One: </label>
+        </div>
+        <input type="text" name="player-one-name" id="player-one-name" placeholder="Enter your name">
+        <div class="markers">
+        <label for="marker">X</label>
+        <input type="radio" name="marker" id="marker-x" value="X"> 
+          <label for="marker-o">O</label> 
+        <input type="radio" name="marker" id="marker-o" value="O"> 
+      </div> 
+      </div>
+      <div class="player-two">
+        <div class="playertwo-name-label">
+        <label for="player-one-name">Player Two:</label>
+      </div>
+        <input type="text" name="player-two-name" id="player-two-name" placeholder="Enter your name">
+      </div>
+      <button class="start-btn" id="start-btn" type="submit" value="Submit">Start Game</button>
+      </div>
+    </div>
+  </form>
   <div class="turn" id="turn">
   </div>
   <div class="board" id="game-board">
   </div>
-</div>
-<!-- <div class="contaner-two">
+  <div class="restart-button">
+    <button class="restart-btn" id="restart-btn" value="Restart">Restart</button>
+  </div>
+</main>
+<div class="contaner-playerTwo">
+  <label for="second-player" class="second-player-label">Player Two:</label>
   <div class="second-player" id="second-player"></div>
-</div> -->
+</div> 
 </body>
 </html>
