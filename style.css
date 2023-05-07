@@ -10,7 +10,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px;
+  height: 700px;
   background-color: #5c7457;
 }
 
@@ -106,7 +106,7 @@ body {
 }
 
 .header-container {
-  height: 50px;
+  height: 40px;
   width: 300px;
   margin-bottom: 30px;
   text-align: center;
