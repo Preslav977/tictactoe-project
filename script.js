@@ -1,4 +1,8 @@
 const gameBoard = (() => {
+  // this variable is used to control
+  // if there is an empty index of the array
+  // place marker if not don't also if there is
+  // a win stop the game same for time else continue
   let isActive = true;
 
   let gameArray = new Array(9).fill('');
@@ -71,7 +75,6 @@ const gameBoard = (() => {
 
   const clearBoard = () => {
     gameArray = new Array(9).fill('');
-    // console.log(gameBoard.gameArray);
   };
 
   return {
@@ -86,8 +89,6 @@ const gameBoard = (() => {
 })();
 
 const gameController = (() => {
-  const startButton = document.getElementById('start-btn');
-
   const createPlayers = (name, marker) => ({ name, marker });
 
   let playerOne;
@@ -102,20 +103,18 @@ const gameController = (() => {
     playerTwo = createPlayers(name, marker);
   };
 
+  let firstPlayer;
+
+  const setFirstPlayer = () => {
+    firstPlayer = playerOne;
+  };
+
   const getPlayerOne = () => playerOne;
 
   const getPlayerTwo = () => playerTwo;
 
-  startButton.addEventListener('click', () => {});
-
-  const playerOneDefault = createPlayers('player One', 'X');
-  const playerTwoDefault = createPlayers('player Two', 'O');
-
-  let firstPlayer = playerOneDefault;
-
   const switchPlayerTurns = () => {
-    firstPlayer =
-      firstPlayer === playerOneDefault ? playerTwoDefault : playerOneDefault;
+    firstPlayer = firstPlayer === playerOne ? playerTwo : playerOne;
   };
 
   const getFirstPlayer = () => firstPlayer;
@@ -146,58 +145,28 @@ const gameController = (() => {
   return {
     playRound,
     switchPlayerTurns,
+    createPlayers,
     getFirstPlayer,
     setPlayerOne,
     setPlayerTwo,
+    setFirstPlayer,
     getPlayerOne,
     getPlayerTwo,
   };
 })();
 
-// Interface for TicTicToe
-// 1. method for getting the id of cells is a must - DONE
-// 2. method for showing the board, created the cells with DOM - DONE
-
-// 3. method for players to be able to put their names and markers,
-// then create new objects using the factory function - TODO
-
-// 4. method for knowing who's marker is and show in the board
-// when the cell has been clicked, then switch turns
-// 4.1. first get the first players marker, place it using the textContent
-// of the marker on the cell, the when the players turns are switch place
-// the second players markers on the cell, if markers already exist
-// in the cell don't place another marker
-// get the first players by accessing the method that switch turns
-// saves the markers by calling the first players with the marker
-// using event target textContent show the players marker - DONE
-
-// 5. method for knowing when there is a win or tie, with conditions
-// to know when to stop the game ! - DONE
-// 5.1 this method will be used to know if player1 won or player2,
-// if any of this is true three in a row depending on the players turn
-// show in the DOM, who won stop the game, otherwise continue until it's
-// win or a tie
-// 6. method to show what happens every turn the game has been played
-// and switch turns, who won or a tie ! - DONE
-// 6.1 this method will show who's the first players turns, who the second
-// players turn is and it will switch back and forth until there is a winner
-// a tie, basically this method will show what happens every turn on the board
-// 7. startButton, that is required to be clicked that will load
-// all these events to play the game otherwise the game cannot be played
-// 7.1 until this button has been clicked no game will be played after
-// has been clicked and been putted name and marker then the game will be
-// played
-// 8. restartButton that will either restart the whole game or only
-// will clear rhe board so the game can be played again
-// 8.1, maybe using points first of 5, or keep the game playing,
-// or play one round reset everything - TODO
-
 const displayController = (() => {
   const userForm = document.querySelector('form');
-  const userFormContainer = document.getElementById('form-container');
   const playerTurnDiv = document.getElementById('turn');
   const boardDiv = document.getElementById('game-board');
   const restartButton = document.getElementById('restart-btn');
+  // TODO: Modal
+  // const modal = document.getElementById('modal');
+  // const startBtn = document.getElementById('start-btn');
+
+  // startBtn.addEventListener('click', () => {
+  //   modal.close();
+  // });
 
   const resetForm = () => {
     userForm.reset();
@@ -219,6 +188,7 @@ const displayController = (() => {
 
     gameController.setPlayerOne(playerOneName, playerOneMarker);
     gameController.setPlayerTwo(playerTwoName, playerTwoMarker);
+    gameController.setFirstPlayer();
 
     const showFirstPlayerName = document.getElementById('first-player');
     showFirstPlayerName.textContent = `${playerOneName}`;
@@ -232,7 +202,7 @@ const displayController = (() => {
     getNameAndMarker();
     console.log(gameController.getPlayerOne());
     console.log(gameController.getPlayerTwo());
-    userFormContainer.style.opacity = 0;
+    // console.log(gameController.getFirstPlayer());
     resetForm();
   });
 
@@ -271,8 +241,6 @@ const displayController = (() => {
     // update screen to show who won
     updateGameScreen('');
   };
-  // update the screen by showing who is first
-  updateGameScreen('');
 
   boardDiv.addEventListener('click', saveCellIndex);
 
@@ -281,7 +249,7 @@ const displayController = (() => {
       const cell = document.createElement('div');
       cell.classList.add('cell');
       cell.setAttribute('data-index', i);
-      cell.style.fontSize = '1.5em';
+      cell.style.fontSize = '2em';
       boardDiv.appendChild(cell);
     }
   };

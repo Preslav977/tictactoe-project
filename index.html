@@ -20,31 +20,34 @@
     <div class="header-container">
       <header class="header">Tic Tac Toe </header>
     </div>
+    <!--TODO: modal-->
+    <!-- <dialog class="modal" id="modal"> -->
     <div class="form-container" id="form-container">
-      <form action="#" method="get">
+      <form action="" method="dialog">
         <div class="user-information">
           <div class="player-one">
             <div class="playerone-name-container">
           <label for="player-one-name">Player One: </label>
         </div>
-        <input type="text" name="player-one-name" id="player-one-name" placeholder="Enter your name">
+        <input type="text" name="player-one-name" id="player-one-name" minlength="1" maxlength="5" placeholder="Enter your name" required>
         <div class="markers">
         <label for="marker">X</label>
-        <input type="radio" name="marker" id="marker-x" value="X"> 
+        <input type="radio" name="marker" id="marker-x" value="X" required> 
           <label for="marker-o">O</label> 
-        <input type="radio" name="marker" id="marker-o" value="O"> 
+        <input type="radio" name="marker" id="marker-o" value="O" required> 
       </div> 
       </div>
       <div class="player-two">
         <div class="playertwo-name-label">
         <label for="player-one-name">Player Two:</label>
       </div>
-        <input type="text" name="player-two-name" id="player-two-name" placeholder="Enter your name">
+        <input type="text" name="player-two-name" id="player-two-name" minlength="1" maxlength="5" placeholder="Enter your name" required>
       </div>
-      <button class="start-btn" id="start-btn" type="submit" value="Submit">Start Game</button>
+      <button type="submit" class="start-btn" id="start-btn">Start Game</button>
       </div>
     </div>
   </form>
+<!-- </dialog> -->
   <div class="turn" id="turn">
   </div>
   <div class="board" id="game-board">

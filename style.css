@@ -10,7 +10,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 800px;
+  height: 600px;
   background-color: #5c7457;
 }
 
@@ -30,8 +30,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   color: black;
+}
+
+.cell:hover {
+  cursor: pointer;
 }
 
 .user-information {
@@ -55,6 +58,7 @@ body {
 .second-player {
   font-size: 25px;
   /* border: 2px solid black; */
+  height: 0px;
   text-align: center;
   display: flex;
   justify-content: flex-start;
@@ -135,7 +139,29 @@ body {
   cursor: pointer;
 }
 
-input::placeholder,
 input {
   color: black;
 }
+
+input[type='text'] {
+  padding-left: 5px;
+}
+
+.restart-btn:active,
+.start-btn:active {
+  transform: translateY(2px);
+}
+
+/* Styles for modal, not yet implemented */
+/* .modal {
+  background-color: #5c7457;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .modal::backdrop {
+  background: rgb(0, 0, 0/ 0.4);
+} */
